@@ -13,7 +13,8 @@ namespace ModularEffectLib
 {
     public class ModEffPlayer : ModPlayer
     {
-        #region Useless members to make autocomplete better
+        #region Commented out methods
+        /*#region Useless members to make autocomplete better
         public override bool Autoload(ref string name)
         {
             return base.Autoload(ref name);
@@ -548,6 +549,7 @@ namespace ModularEffectLib
         public override float UseTimeMultiplier(Item item)
         {
             return base.UseTimeMultiplier(item);
-        }
+        }*/
+        #endregion
     }
 }
