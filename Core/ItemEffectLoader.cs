@@ -21,7 +21,7 @@ namespace ModularEffectLib.Core
             LoadingHelper.SetLoadStage("Registering ItemEffects...");
             string lastModName = "";
 
-            ItemsToLoad.Add(ModContent.GetModItem(ModContent.ItemType<Terraria.ModLoader.Default.AprilFools>()));
+            //ItemsToLoad.Add(ModContent.GetModItem(ModContent.ItemType<Terraria.ModLoader.Default.AprilFools>()));
 
             for (int i = 0; i < ItemsToLoad.Count; i++)
             {
@@ -33,7 +33,7 @@ namespace ModularEffectLib.Core
                     LoadingHelper.SetSubText(lastModName);
                 }
 
-                Thread.Sleep(5000);
+                //Thread.Sleep(5000);
 
                 if (item is ModularEffectItem mItem)
                 {

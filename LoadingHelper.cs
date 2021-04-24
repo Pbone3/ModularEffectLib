@@ -17,8 +17,8 @@ namespace ModularEffectLib
         internal static void Load()
         {
             Assembly modLoader = typeof(ModLoader).Assembly;
-            UILoadModsInstance = modLoader.GetType("Terraria.ModLoader.UI.Interface").GetField("loadMods", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
 
+            UILoadModsInstance = modLoader.GetType("Terraria.ModLoader.UI.Interface").GetField("loadMods", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
             UILoadMods = modLoader.GetType("Terraria.ModLoader.UI.UILoadMods");
 
             StageTextFIeld = UILoadMods.GetField("stageText", BindingFlags.NonPublic | BindingFlags.Instance);
