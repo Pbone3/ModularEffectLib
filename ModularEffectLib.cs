@@ -20,12 +20,11 @@ namespace ModularEffectLib
         {
             base.PostSetupContent();
             loader.Load();
-        }
+            LoadingHelper.Unload(); // Unload it already because I only need it during load
 
         public override void Unload()
         {
             base.Unload();
-            LoadingHelper.Unload();
             loader = null;
         }
     }

@@ -6,46 +6,53 @@ namespace ModularEffectLib
 {
     internal static class LoadingHelper
     {
-        internal static object LoadMods;
+        internal static object UILoadModsInstance;
+        internal static Type UILoadMods;
 
-        // string stageText, int modCount = -1
+        internal static FieldInfo StageTextFIeld;
         internal static MethodInfo SetLoadStageMethod;
-        // string text
         internal static PropertyInfo SubProgressTextProperty;
-        // float amount
         internal static PropertyInfo ProgressProperty;
 
         internal static void Load()
         {
             Assembly modLoader = typeof(ModLoader).Assembly;
-            LoadMods = modLoader.GetType("Terraria.ModLoader.UI.Interface").GetField("loadMods", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+            UILoadModsInstance = modLoader.GetType("Terraria.ModLoader.UI.Interface").GetField("loadMods", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
 
-            Type uiLoadMods = modLoader.GetType("Terraria.ModLoader.UI.UILoadMods");
+            UILoadMods = modLoader.GetType("Terraria.ModLoader.UI.UILoadMods");
 
-            SetLoadStageMethod = uiLoadMods.GetMethod("SetLoadStage", BindingFlags.Public | BindingFlags.Instance);
-            SubProgressTextProperty = uiLoadMods.GetProperty("SubProgressText", BindingFlags.Public | BindingFlags.Instance);
-            ProgressProperty = uiLoadMods.GetProperty("Progress", BindingFlags.Public | BindingFlags.Instance);
+            StageTextFIeld = UILoadMods.GetField("stageText", BindingFlags.NonPublic | BindingFlags.Instance);
+            SetLoadStageMethod = UILoadMods.GetMethod("SetLoadStage", BindingFlags.Public | BindingFlags.Instance);
+            SubProgressTextProperty = UILoadMods.GetProperty("SubProgressText", BindingFlags.Public | BindingFlags.Instance);
+            ProgressProperty = UILoadMods.GetProperty("Progress", BindingFlags.Public | BindingFlags.Instance);
         }
 
         internal static void SetLoadStage(string text)
         {
-            SetLoadStageMethod.Invoke(LoadMods, new object[] { text, -1 });
+            SetLoadStageMethod.Invoke(UILoadModsInstance, new object[] { text, -1 });
         }
 
-        internal static void SubProgress(string text)
+        internal static void SetSubText(string text)
         {
-            SubProgressTextProperty.SetValue(LoadMods, text);
+            SubProgressTextProperty.SetValue(UILoadModsInstance, text);
         }
 
-        internal static void Progress(float progress)
+        internal static void SetProgress(float progress)
         {
-            ProgressProperty.SetValue(LoadMods, progress);
+            ProgressProperty.SetValue(UILoadModsInstance, progress);
+        }
+
+        internal static string GetLoadStage()
+        {
+            return (string)StageTextFIeld.GetValue(UILoadModsInstance);
         }
 
         internal static void Unload()
         {
-            LoadMods = null;
+            UILoadModsInstance = null;
+            UILoadMods = null;
 
+            StageTextFIeld = null;
             SetLoadStageMethod = null;
             SubProgressTextProperty = null;
             ProgressProperty = null;

@@ -14,12 +14,14 @@ namespace ModularEffectLib.Core
         internal List<ModItem> ItemsToLoad = new List<ModItem>();
         internal Dictionary<int, HashSet<EffectIdentifier>> cachedMyEffects = new Dictionary<int, HashSet<EffectIdentifier>>();
 
+        // TODO Load MyEffects then RealEffects so load order doesn't mess things up
         internal void Load()
         {
+            string origLoadStage = LoadingHelper.GetLoadStage();
             LoadingHelper.SetLoadStage("Registering ItemEffects...");
             string lastModName = "";
 
-            //ItemsToLoad.Add(ModContent.GetModItem(ModContent.ItemType<Terraria.ModLoader.Default.AprilFools>()));
+            ItemsToLoad.Add(ModContent.GetModItem(ModContent.ItemType<Terraria.ModLoader.Default.AprilFools>()));
 
             for (int i = 0; i < ItemsToLoad.Count; i++)
             {
@@ -28,17 +30,22 @@ namespace ModularEffectLib.Core
                 if (item.mod.Name != lastModName)
                 {
                     lastModName = item.mod.Name;
-                    LoadingHelper.SubProgress(lastModName);
+                    LoadingHelper.SetSubText(lastModName);
                 }
+
+                Thread.Sleep(5000);
 
                 if (item is ModularEffectItem mItem)
                 {
                     mItem.RegisterItemEffects();
                 }
 
-                LoadingHelper.Progress((float)i / ItemsToLoad.Count);
+                LoadingHelper.SetProgress((float)i / ItemsToLoad.Count);
             }
 
+            LoadingHelper.SetLoadStage(origLoadStage);
+            LoadingHelper.SetSubText("");
+            LoadingHelper.SetProgress(0f);
             ItemsToLoad.Clear();
         }
 

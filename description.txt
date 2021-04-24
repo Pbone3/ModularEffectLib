@@ -1,1 +1,1 @@
-Modular Effect Lib is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+Modular Effect Lib is a library for developers that allows you to more easily abstract effect code for items. See the homepage for more info.
