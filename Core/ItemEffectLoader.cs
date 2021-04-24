@@ -5,11 +5,15 @@ namespace ModularEffectLib.Core
 {
     public class ItemEffectLoader
     {
-        #region Events
-
-        #endregion
-
         public Dictionary<EffectIdentifier, ItemEffect> LoadedEffects;
+
+        public void UpdateAccessory(HashSet<EffectIdentifier> effects, Player player, bool hideVisual, Item effectOwner)
+        {
+            foreach (EffectIdentifier id in effects)
+            {
+                LoadedEffects[id].UpdateAccessory(player, hideVisual, effectOwner);
+            }
+        }
 
         public void RegisterEffect(EffectIdentifier id, ItemEffect effect)
         {

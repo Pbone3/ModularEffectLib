@@ -1,4 +1,3 @@
 displayName = Modular Effect Lib
 author = pbone
 version = 0.1
-dllReferences = ModLoaderHooks.dll
